@@ -1,13 +1,13 @@
-import { todolistsAPI, TodolistType } from '../../api/todolists-api';
+import { todolistsAPI, TodolistType } from 'api/todolists-api';
 import { Dispatch } from 'redux';
 import {
   RequestStatusType,
   SetAppErrorActionType,
   setAppStatusAC,
   SetAppStatusActionType,
-} from '../../app/app-reducer';
-import { handleServerNetworkError } from '../../utils/error-utils';
-import { AppThunk } from '../../app/store';
+} from 'app/app-reducer';
+import { handleServerNetworkError } from 'utils/error-utils';
+import { AppThunk } from 'app/store';
 
 const initialState: Array<TodolistDomainType> = [];
 
@@ -52,12 +52,19 @@ export const removeTodolistAC = (id: string) =>
   ({ type: 'REMOVE-TODOLIST', id }) as const;
 export const addTodolistAC = (todolist: TodolistType) =>
   ({ type: 'ADD-TODOLIST', todolist }) as const;
-export const changeTodolistTitleAC = (id: string, title: string) =>
-  ({
+export const changeTodolistTitleAC = ({
+  id,
+  title,
+}: {
+  id: string;
+  title: string;
+}) => {
+  return {
     type: 'CHANGE-TODOLIST-TITLE',
     id,
     title,
-  }) as const;
+  } as const;
+};
 export const changeTodolistFilterAC = (id: string, filter: FilterValuesType) =>
   ({
     type: 'CHANGE-TODOLIST-FILTER',
@@ -116,7 +123,7 @@ export const addTodolistTC = (title: string) => {
 export const changeTodolistTitleTC = (id: string, title: string) => {
   return (dispatch: Dispatch<ActionsType>) => {
     todolistsAPI.updateTodolist(id, title).then((res) => {
-      dispatch(changeTodolistTitleAC(id, title));
+      dispatch(changeTodolistTitleAC({ id: id, title: title }));
     });
   };
 };
