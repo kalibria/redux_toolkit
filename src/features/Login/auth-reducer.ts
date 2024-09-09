@@ -3,12 +3,12 @@ import {
   SetAppErrorActionType,
   setAppStatusAC,
   SetAppStatusActionType,
-} from '../../app/app-reducer';
-import { authAPI, LoginParamsType } from '../../api/todolists-api';
+} from 'app/app-reducer';
+import { authAPI, LoginParamsType } from 'api/todolists-api';
 import {
   handleServerAppError,
   handleServerNetworkError,
-} from '../../utils/error-utils';
+} from 'utils/error-utils';
 
 const initialState: InitialStateType = {
   isLoggedIn: false,

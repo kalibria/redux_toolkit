@@ -9,19 +9,19 @@ import {
   TaskType,
   todolistsAPI,
   UpdateTaskModelType,
-} from '../../api/todolists-api';
+} from 'api/todolists-api';
 import { Dispatch } from 'redux';
-import { AppRootStateType } from '../../app/store';
+import { AppRootStateType } from 'app/store';
 import {
   setAppErrorAC,
   SetAppErrorActionType,
   setAppStatusAC,
   SetAppStatusActionType,
-} from '../../app/app-reducer';
+} from 'app/app-reducer';
 import {
   handleServerAppError,
   handleServerNetworkError,
-} from '../../utils/error-utils';
+} from 'utils/error-utils';
 
 const initialState: TasksStateType = {};
 

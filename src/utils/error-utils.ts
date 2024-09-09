@@ -3,8 +3,8 @@ import {
   SetAppErrorActionType,
   setAppStatusAC,
   SetAppStatusActionType,
-} from '../app/app-reducer';
-import { ResponseType } from '../api/todolists-api';
+} from 'app/app-reducer';
+import { ResponseType } from 'api/todolists-api';
 import { Dispatch } from 'redux';
 
 export const handleServerAppError = <D>(
