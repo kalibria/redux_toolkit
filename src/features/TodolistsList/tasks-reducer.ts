@@ -11,13 +11,8 @@ import {
   UpdateTaskModelType,
 } from 'api/todolists-api';
 import { Dispatch } from 'redux';
-import { AppRootStateType } from 'app/store';
-import {
-  setAppErrorAC,
-  SetAppErrorActionType,
-  setAppStatusAC,
-  SetAppStatusActionType,
-} from 'app/app-reducer';
+import { AppRootStateType, AppThunk } from 'app/store';
+import { setAppStatusAC } from 'app/app-reducer';
 import {
   handleServerAppError,
   handleServerNetworkError,
@@ -96,8 +91,8 @@ export const setTasksAC = (tasks: Array<TaskType>, todolistId: string) =>
 
 // thunks
 export const fetchTasksTC =
-  (todolistId: string) =>
-  (dispatch: Dispatch<ActionsType | SetAppStatusActionType>) => {
+  (todolistId: string): AppThunk =>
+  (dispatch) => {
     dispatch(setAppStatusAC('loading'));
     todolistsAPI.getTasks(todolistId).then((res) => {
       const tasks = res.data.items;
@@ -106,19 +101,15 @@ export const fetchTasksTC =
     });
   };
 export const removeTaskTC =
-  (taskId: string, todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
+  (taskId: string, todolistId: string): AppThunk =>
+  (dispatch) => {
     todolistsAPI.deleteTask(todolistId, taskId).then((res) => {
       const action = removeTaskAC({ taskId: taskId, todolistId: todolistId });
       dispatch(action);
     });
   };
 export const addTaskTC =
-  (title: string, todolistId: string) =>
-  (
-    dispatch: Dispatch<
-      ActionsType | SetAppErrorActionType | SetAppStatusActionType
-    >
-  ) => {
+  (title: string, todolistId: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'));
     todolistsAPI
       .createTask(todolistId, title)
@@ -200,6 +191,4 @@ type ActionsType =
   | RemoveTodolistActionType
   | SetTodolistsActionType
   | ReturnType<typeof setTasksAC>;
-type ThunkDispatch = Dispatch<
-  ActionsType | SetAppStatusActionType | SetAppErrorActionType
->;
+type ThunkDispatch = Dispatch;

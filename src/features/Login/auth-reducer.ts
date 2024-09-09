@@ -1,11 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { authAPI, LoginParamsType } from 'api/todolists-api';
-import { Dispatch } from 'redux';
-import {
-  SetAppErrorActionType,
-  setAppStatusAC,
-  SetAppStatusActionType,
-} from 'app/app-reducer';
+import { setAppStatusAC } from 'app/app-reducer';
 import {
   handleServerAppError,
   handleServerNetworkError,
