@@ -198,7 +198,10 @@ test('empty arrays should be added when we set todolists', () => {
   expect(endState['2']).toBeDefined();
 });
 test('tasks should be added for todolist', () => {
-  const action = setTasksAC(startState['todolistId1'], 'todolistId1');
+  const action = setTasksAC({
+    tasks: startState['todolistId1'],
+    todolistId: 'todolistId1',
+  });
 
   const endState = tasksReducer(
     {
