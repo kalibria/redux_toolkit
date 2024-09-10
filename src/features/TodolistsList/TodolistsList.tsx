@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { AppRootStateType } from 'app/store';
 import {
   addTodolistTC,
-  changeTodolistFilterAC,
+  changeTodolistFilter,
   changeTodolistTitleTC,
   fetchTodolistsTC,
   FilterValuesType,
@@ -80,7 +80,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     value: FilterValuesType,
     todolistId: string
   ) {
-    const action = changeTodolistFilterAC({ id: todolistId, filter: value });
+    const action = changeTodolistFilter({ id: todolistId, filter: value });
     dispatch(action);
   }, []);
 
