@@ -18,13 +18,11 @@ const todoListSlice = createSlice({
   initialState,
   reducers: {
     addTodolist(state, action: PayloadAction<TodolistType>) {
-      return [
-        { ...action.payload, filter: 'all', entityStatus: 'idle' },
-        ...state,
-      ];
+      state.unshift({ ...action.payload, filter: 'all', entityStatus: 'idle' });
     },
     removeTodolist(state, action: PayloadAction<string>) {
-      return state.filter((tl) => tl.id != action.payload);
+      const index = state.findIndex((todo) => todo.id === action.payload);
+      if (index !== -1) state.splice(index, 1);
     },
     changeTodolistTitle(
       state,
@@ -33,33 +31,24 @@ const todoListSlice = createSlice({
         title: string;
       }>
     ) {
-      return state.map((tl) =>
-        tl.id === action.payload.id
-          ? { ...tl, title: action.payload.title }
-          : tl
-      );
+      const index = state.findIndex((todo) => todo.id === action.payload.id);
+      if (index !== -1) state[index].title = action.payload.title;
     },
     changeTodolistFilter(
       state,
       action: PayloadAction<{ id: string; filter: FilterValuesType }>
     ) {
-      return state.map((tl) =>
-        tl.id === action.payload.id
-          ? { ...tl, filter: action.payload.filter }
-          : tl
-      );
+      const index = state.findIndex((todo) => todo.id === action.payload.id);
+      if (index !== -1) state[index].filter = action.payload.filter;
     },
     changeTodolistEntityStatus(
       state,
       action: PayloadAction<{ id: string; status: RequestStatus }>
     ) {
-      return state.map((tl) =>
-        tl.id === action.payload.id
-          ? { ...tl, entityStatus: action.payload.status }
-          : tl
-      );
+      const index = state.findIndex((todo) => todo.id === action.payload.id);
+      if (index !== -1) state[index].entityStatus = action.payload.status;
     },
-    setTodolists(state, action: PayloadAction<Array<TodolistType>>) {
+    setTodolists(_state, action: PayloadAction<Array<TodolistType>>) {
       return action.payload.map((tl) => ({
         ...tl,
         filter: 'all',
