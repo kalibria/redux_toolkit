@@ -11,7 +11,7 @@ import {
 } from './todolists-reducer';
 import { v1 } from 'uuid';
 import { TodolistType } from 'api/todolists-api';
-import { RequestStatusType } from 'app/app-reducer';
+import { RequestStatus } from 'app/app-reducer';
 
 let todolistId1: string;
 let todolistId2: string;
@@ -94,7 +94,7 @@ test('todolists should be added', () => {
   expect(endState.length).toBe(2);
 });
 test('correct entity status of todolist should be changed', () => {
-  let newStatus: RequestStatusType = 'loading';
+  let newStatus: RequestStatus = 'loading';
 
   const action = changeTodolistEntityStatus({
     id: todolistId2,

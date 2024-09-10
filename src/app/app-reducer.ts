@@ -3,15 +3,15 @@ import { authAPI } from 'api/todolists-api';
 import { setIsLoggedIn } from 'features/Login/auth-reducer';
 import { AppThunk } from 'app/store';
 
-export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
+export type RequestStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
 
-export type InitialStateType = {
-  status: RequestStatusType;
+export type InitialState = {
+  status: RequestStatus;
   error: string | null;
   isInitialized: boolean;
 };
 
-const initialState: InitialStateType = {
+const initialState: InitialState = {
   status: 'idle',
   error: null,
   isInitialized: false,
@@ -21,13 +21,13 @@ const appSlice = createSlice({
   initialState,
   reducers: {
     setAppError(state, action: PayloadAction<string | null>) {
-      return { ...state, error: action.payload };
+      state.error = action.payload;
     },
-    setAppStatus(state, action: PayloadAction<RequestStatusType>) {
-      return { ...state, status: action.payload };
+    setAppStatus(state, action: PayloadAction<RequestStatus>) {
+      state.status = action.payload;
     },
     setAppInitialized(state, action: PayloadAction<boolean>) {
-      return { ...state, isInitialized: action.payload };
+      state.isInitialized = action.payload;
     },
   },
 });

@@ -1,11 +1,11 @@
 import {
   appReducer,
-  InitialStateType,
+  InitialState,
   setAppError,
   setAppStatus,
 } from './app-reducer';
 
-let startState: InitialStateType;
+let startState: InitialState;
 
 beforeEach(() => {
   startState = {

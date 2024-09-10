@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { todolistsAPI, TodolistType } from 'api/todolists-api';
-import { RequestStatusType, setAppStatus } from 'app/app-reducer';
+import { RequestStatus, setAppStatus } from 'app/app-reducer';
 import { AppThunk } from 'app/store';
 import { handleServerNetworkError } from 'utils/error-utils';
 
@@ -8,7 +8,7 @@ export type FilterValuesType = 'all' | 'active' | 'completed';
 
 export type TodolistDomainType = TodolistType & {
   filter: FilterValuesType;
-  entityStatus: RequestStatusType;
+  entityStatus: RequestStatus;
 };
 
 const initialState: Array<TodolistDomainType> = [];
@@ -51,7 +51,7 @@ const todoListSlice = createSlice({
     },
     changeTodolistEntityStatus(
       state,
-      action: PayloadAction<{ id: string; status: RequestStatusType }>
+      action: PayloadAction<{ id: string; status: RequestStatus }>
     ) {
       return state.map((tl) =>
         tl.id === action.payload.id
