@@ -7,11 +7,11 @@ import {
 } from 'utils/error-utils';
 import { AppThunk } from 'app/store';
 
-type InitialStateType = {
+type InitialState = {
   isLoggedIn: boolean;
 };
 
-const initialState: InitialStateType = {
+const initialState: InitialState = {
   isLoggedIn: false,
 };
 
@@ -20,7 +20,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setIsLoggedIn(state, action: PayloadAction<boolean>) {
-      return { ...state, isLoggedIn: action.payload };
+      state.isLoggedIn = action.payload;
     },
   },
 });
