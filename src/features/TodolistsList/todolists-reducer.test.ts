@@ -79,7 +79,7 @@ test('correct todolist should change its name', () => {
 test('correct filter of todolist should be changed', () => {
   let newFilter: FilterValuesType = 'completed';
 
-  const action = changeTodolistFilterAC(todolistId2, newFilter);
+  const action = changeTodolistFilterAC({ id: todolistId2, filter: newFilter });
 
   const endState = todolistsReducer(startState, action);
 
@@ -96,7 +96,10 @@ test('todolists should be added', () => {
 test('correct entity status of todolist should be changed', () => {
   let newStatus: RequestStatusType = 'loading';
 
-  const action = changeTodolistEntityStatusAC(todolistId2, newStatus);
+  const action = changeTodolistEntityStatusAC({
+    id: todolistId2,
+    status: newStatus,
+  });
 
   const endState = todolistsReducer(startState, action);
 

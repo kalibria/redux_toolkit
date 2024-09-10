@@ -1,9 +1,4 @@
 import {
-  AddTodolistActionType,
-  RemoveTodolistActionType,
-  SetTodolistsActionType,
-} from './todolists-reducer';
-import {
   TaskPriorities,
   TaskStatuses,
   TaskType,
@@ -53,13 +48,13 @@ export const tasksReducer = (
       const copyState = { ...state };
       delete copyState[action.id];
       return copyState;
-    case 'SET-TODOLISTS': {
-      const copyState = { ...state };
-      action.todolists.forEach((tl) => {
-        copyState[tl.id] = [];
-      });
-      return copyState;
-    }
+    // case 'SET-TODOLISTS': {
+    //   const copyState = { ...state };
+    //   // action.todolists.forEach((tl) => {
+    //   //   copyState[tl.id] = [];
+    //   // });
+    //   return copyState;
+    // }
     case 'SET-TASKS':
       return { ...state, [action.todolistId]: action.tasks };
     default:
@@ -187,8 +182,6 @@ type ActionsType =
   | ReturnType<typeof removeTaskAC>
   | ReturnType<typeof addTaskAC>
   | ReturnType<typeof updateTaskAC>
-  | AddTodolistActionType
-  | RemoveTodolistActionType
-  | SetTodolistsActionType
-  | ReturnType<typeof setTasksAC>;
+  | ReturnType<typeof setTasksAC>
+  | any;
 type ThunkDispatch = Dispatch;
