@@ -89,9 +89,13 @@ export const taskSlice = createSlice({
         });
       });
   },
+  selectors: {
+    selectTasks: (state) => state,
+  },
 });
 
 export const { removeTask, setTasks, addTask, updateTask } = taskSlice.actions;
+export const { selectTasks } = taskSlice.selectors;
 
 // thunks
 export const fetchTasksTC =
