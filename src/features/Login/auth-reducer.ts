@@ -23,9 +23,13 @@ export const authSlice = createSlice({
       state.isLoggedIn = action.payload;
     },
   },
+  selectors: {
+    selectIsLoggedIn: (state) => state.isLoggedIn,
+  },
 });
 
 export const { setIsLoggedIn } = authSlice.actions;
+export const { selectIsLoggedIn } = authSlice.selectors;
 
 // thunks
 export const loginTC =
