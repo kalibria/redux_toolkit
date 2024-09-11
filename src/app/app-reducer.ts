@@ -16,7 +16,7 @@ const initialState: InitialState = {
   error: null,
   isInitialized: false,
 };
-const appSlice = createSlice({
+export const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
@@ -29,6 +29,11 @@ const appSlice = createSlice({
     setAppInitialized(state, action: PayloadAction<boolean>) {
       state.isInitialized = action.payload;
     },
+  },
+  selectors: {
+    selectAppError: (state) => state.error,
+    selectAppStatus: (state) => state.status,
+    selectAppInitialized: (state) => state.isInitialized,
   },
 });
 
@@ -43,7 +48,7 @@ export const initializeAppTC = (): AppThunk => (dispatch) => {
   });
 };
 
-export const appReducer = appSlice.reducer;
-
 export const { setAppError, setAppStatus, setAppInitialized } =
   appSlice.actions;
+export const { selectAppError, selectAppStatus, selectAppInitialized } =
+  appSlice.selectors;

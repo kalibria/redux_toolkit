@@ -33,7 +33,7 @@ export type UpdateDomainTaskModelType = {
 
 const initialState: TasksState = {};
 
-const taskSlice = createSlice({
+export const taskSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
@@ -91,7 +91,6 @@ const taskSlice = createSlice({
   },
 });
 
-export const tasksReducer = taskSlice.reducer;
 export const { removeTask, setTasks, addTask, updateTask } = taskSlice.actions;
 
 // thunks

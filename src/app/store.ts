@@ -1,19 +1,20 @@
-import { tasksReducer } from 'features/TodolistsList/tasks-reducer';
-import { todolistsReducer } from 'features/TodolistsList/todolists-reducer';
+import { taskSlice } from 'features/TodolistsList/tasks-reducer';
+import { todoListSlice } from 'features/TodolistsList/todolists-reducer';
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { appReducer } from './app-reducer';
-import { authReducer } from 'features/Login/auth-reducer';
+
+import { authSlice } from 'features/Login/auth-reducer';
 import {
   combineReducers,
   configureStore,
   UnknownAction,
 } from '@reduxjs/toolkit';
+import { appSlice } from 'app/app-reducer';
 
 const rootReducer = combineReducers({
-  tasks: tasksReducer,
-  todolists: todolistsReducer,
-  app: appReducer,
-  auth: authReducer,
+  [taskSlice.reducerPath]: taskSlice.reducer,
+  [todoListSlice.reducerPath]: todoListSlice.reducer,
+  [appSlice.reducerPath]: appSlice.reducer,
+  [authSlice.reducerPath]: authSlice.reducer,
 });
 
 // ❗старая запись, с новыми версиями не работает
