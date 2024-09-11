@@ -3,14 +3,14 @@ import {
   removeTask,
   setTasks,
   tasksReducer,
-  TasksStateType,
+  TasksState,
   updateTask,
 } from './tasks-reducer';
 
 import { addTodolist, removeTodolist, setTodolists } from './todolists-reducer';
 import { TaskPriorities, TaskStatuses } from 'api/todolists-api';
 
-let startState: TasksStateType = {};
+let startState: TasksState = {};
 beforeEach(() => {
   startState = {
     todolistId1: [

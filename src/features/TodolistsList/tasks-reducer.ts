@@ -19,7 +19,7 @@ import {
   handleServerNetworkError,
 } from 'utils/error-utils';
 
-export type TasksStateType = {
+export type TasksState = {
   [key: string]: Array<TaskType>;
 };
 export type UpdateDomainTaskModelType = {
@@ -31,7 +31,7 @@ export type UpdateDomainTaskModelType = {
   deadline?: string;
 };
 
-const initialState: TasksStateType = {};
+const initialState: TasksState = {};
 
 const taskSlice = createSlice({
   name: 'tasks',
@@ -44,21 +44,15 @@ const taskSlice = createSlice({
         todolistId: string;
       }>
     ) {
-      return {
-        ...state,
-        [action.payload.todolistId]: state[action.payload.todolistId].filter(
-          (t) => t.id != action.payload.taskId
-        ),
-      };
+      const tasks = state[action.payload.todolistId];
+      const index = tasks.findIndex(
+        (todo) => todo.id === action.payload.taskId
+      );
+      if (index !== -1) tasks.splice(index, 1);
     },
     addTask(state, action: PayloadAction<TaskType>) {
-      return {
-        ...state,
-        [action.payload.todoListId]: [
-          action.payload,
-          ...state[action.payload.todoListId],
-        ],
-      };
+      const tasks = state[action.payload.todoListId];
+      tasks.unshift(action.payload);
     },
     updateTask(
       state,
@@ -68,39 +62,31 @@ const taskSlice = createSlice({
         todolistId: string;
       }>
     ) {
-      return {
-        ...state,
-        [action.payload.todolistId]: state[action.payload.todolistId].map(
-          (t) =>
-            t.id === action.payload.taskId
-              ? { ...t, ...action.payload.model }
-              : t
-        ),
-      };
+      const tasks = state[action.payload.todolistId];
+      const task = tasks.find((task) => task.id === action.payload.taskId);
+      if (task) {
+        Object.assign(task, action.payload.model);
+      }
     },
     setTasks(
       state,
       action: PayloadAction<{ tasks: Array<TaskType>; todolistId: string }>
     ) {
-      return { ...state, [action.payload.todolistId]: action.payload.tasks };
+      state[action.payload.todolistId] = action.payload.tasks;
     },
   },
   extraReducers(builder) {
     builder
       .addCase(addTodolist, (state, action) => {
-        return { ...state, [action.payload.id]: [] };
+        state[action.payload.id] = [];
       })
       .addCase(removeTodolist, (state, action) => {
-        const copyState = { ...state };
-        delete copyState[action.payload];
-        return copyState;
+        delete state[action.payload];
       })
       .addCase(setTodolists, (state, action) => {
-        const copyState = { ...state };
         action.payload.forEach((tl) => {
-          copyState[tl.id] = [];
+          state[tl.id] = [];
         });
-        return copyState;
       });
   },
 });

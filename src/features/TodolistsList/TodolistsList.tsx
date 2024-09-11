@@ -13,7 +13,7 @@ import {
 import {
   addTaskTC,
   removeTaskTC,
-  TasksStateType,
+  TasksState,
   updateTaskTC,
 } from './tasks-reducer';
 import { TaskStatuses } from '../../api/todolists-api';
@@ -31,7 +31,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
   const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(
     (state) => state.todolists
   );
-  const tasks = useSelector<AppRootStateType, TasksStateType>(
+  const tasks = useSelector<AppRootStateType, TasksState>(
     (state) => state.tasks
   );
   const isLoggedIn = useSelector<AppRootStateType, boolean>(
