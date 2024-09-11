@@ -8,6 +8,7 @@ import {
   fetchTodolistsTC,
   FilterValuesType,
   removeTodolistTC,
+  selectTodoLists,
   TodolistDomainType,
 } from './todolists-reducer';
 import {
@@ -29,9 +30,7 @@ type PropsType = {
 };
 
 export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
-  const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(
-    (state) => state.todolists
-  );
+  const todolists = useSelector(selectTodoLists);
   const tasks = useSelector<AppRootStateType, TasksState>(
     (state) => state.tasks
   );
