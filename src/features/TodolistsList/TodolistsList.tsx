@@ -9,7 +9,7 @@ import {
   removeTodolistTC,
   selectTodoLists,
 } from './todolists-reducer';
-import { removeTaskTC, selectTasks, updateTaskTC } from './tasks-reducer';
+import { removeTaskTC, selectTasks, updateTask } from './tasks-reducer';
 import { TaskStatuses } from 'api/todolists-api';
 import { Grid, Paper } from '@mui/material';
 import { AddItemForm } from 'components/AddItemForm/AddItemForm';
@@ -51,21 +51,19 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
   }, []);
 
   const changeStatus = useCallback(function (
-    id: string,
+    taskId: string,
     status: TaskStatuses,
     todolistId: string
   ) {
-    const thunk = updateTaskTC(id, { status }, todolistId);
-    dispatch(thunk);
+    dispatch(updateTask({ taskId, model: { status }, todolistId }));
   }, []);
 
   const changeTaskTitle = useCallback(function (
-    id: string,
-    newTitle: string,
+    taskId: string,
+    title: string,
     todolistId: string
   ) {
-    const thunk = updateTaskTC(id, { title: newTitle }, todolistId);
-    dispatch(thunk);
+    dispatch(updateTask({ taskId, model: { title }, todolistId }));
   }, []);
 
   const changeFilter = useCallback(function (
