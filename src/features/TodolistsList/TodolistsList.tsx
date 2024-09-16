@@ -9,12 +9,7 @@ import {
   removeTodolistTC,
   selectTodoLists,
 } from './todolists-reducer';
-import {
-  addTaskTC,
-  removeTaskTC,
-  selectTasks,
-  updateTaskTC,
-} from './tasks-reducer';
+import { removeTaskTC, selectTasks, updateTaskTC } from './tasks-reducer';
 import { TaskStatuses } from 'api/todolists-api';
 import { Grid, Paper } from '@mui/material';
 import { AddItemForm } from 'components/AddItemForm/AddItemForm';
@@ -22,6 +17,7 @@ import { Todolist } from './Todolist/Todolist';
 import { Navigate } from 'react-router-dom';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { selectIsLoggedIn } from 'features/Login/auth-reducer';
+import { addTask } from './tasks-reducer';
 
 type PropsType = {
   demo?: boolean;
@@ -47,9 +43,11 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     dispatch(thunk);
   }, []);
 
-  const addTask = useCallback(function (title: string, todolistId: string) {
-    const thunk = addTaskTC(title, todolistId);
-    dispatch(thunk);
+  const addTaskCallback = useCallback(function (
+    title: string,
+    todolistId: string
+  ) {
+    dispatch(addTask({ todolistId, title }));
   }, []);
 
   const changeStatus = useCallback(function (
@@ -126,7 +124,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
                   tasks={allTodolistTasks}
                   removeTask={removeTask}
                   changeFilter={changeFilter}
-                  addTask={addTask}
+                  addTask={addTaskCallback}
                   changeTaskStatus={changeStatus}
                   removeTodolist={removeTodolist}
                   changeTaskTitle={changeTaskTitle}
