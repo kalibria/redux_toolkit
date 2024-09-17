@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import {
   addTodolist,
   changeTodolistFilter,
-  changeTodolistTitleTC,
+  changeTodolistTitle,
   fetchTodoList,
   FilterValuesType,
   removeTodolist,
@@ -80,9 +80,11 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     dispatch(removeTodolist({ todolistId }));
   }, []);
 
-  const changeTodolistTitle = useCallback(function (id: string, title: string) {
-    const thunk = changeTodolistTitleTC(id, title);
-    dispatch(thunk);
+  const changeTodolistTitleCallback = useCallback(function (
+    id: string,
+    title: string
+  ) {
+    dispatch(changeTodolistTitle({ id, title }));
   }, []);
 
   const addTodolistCallback = useCallback(
@@ -126,7 +128,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
                   changeTaskStatus={changeStatus}
                   removeTodolist={removeTodolistCallback}
                   changeTaskTitle={changeTaskTitle}
-                  changeTodolistTitle={changeTodolistTitle}
+                  changeTodolistTitle={changeTodolistTitleCallback}
                   demo={demo}
                 />
               </Paper>

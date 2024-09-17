@@ -93,6 +93,11 @@ export type UpdateTypesArgs = {
   todolistId: string;
 };
 
+export type UpdateTodoTypesArgs = {
+  id: string;
+  title: string;
+};
+
 export type TodolistType = {
   id: string;
   title: string;
