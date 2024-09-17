@@ -7,7 +7,11 @@ import {
   updateTask,
 } from './tasks-reducer';
 
-import { addTodolist, removeTodolist, setTodolists } from './todolists-reducer';
+import {
+  addTodolist,
+  fetchTodoList,
+  removeTodolist,
+} from './todolists-reducer';
 import { TaskPriorities, TaskStatuses } from 'api/todolists-api';
 import { TestAction } from 'common/types/types';
 
@@ -199,10 +203,13 @@ test('propertry with todolistId should be deleted', () => {
 });
 
 test('empty arrays should be added when we set todolists', () => {
-  const action = setTodolists([
-    { id: '1', title: 'title 1', order: 0, addedDate: '' },
-    { id: '2', title: 'title 2', order: 0, addedDate: '' },
-  ]);
+  const action: TestAction<typeof fetchTodoList.fulfilled> = {
+    type: fetchTodoList.fulfilled.type,
+    payload: [
+      { id: '1', title: 'title 1', order: 0, addedDate: '' },
+      { id: '2', title: 'title 2', order: 0, addedDate: '' },
+    ],
+  };
 
   const endState = taskSlice.reducer({}, action);
 

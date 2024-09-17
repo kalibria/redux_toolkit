@@ -3,15 +3,18 @@ import {
   changeTodolistEntityStatus,
   changeTodolistFilter,
   changeTodolistTitle,
+  fetchTodoList,
   FilterValuesType,
   removeTodolist,
-  setTodolists,
+  // setTodolists,
   TodolistDomainType,
   todoListSlice,
 } from './todolists-reducer';
 import { v1 } from 'uuid';
 import { TodolistType } from 'api/todolists-api';
 import { RequestStatus } from 'app/app-reducer';
+import { fetchTasks } from 'features/TodolistsList/tasks-reducer';
+import { TestAction } from 'common/types/types';
 
 let todolistId1: string;
 let todolistId2: string;
@@ -90,7 +93,10 @@ test('correct filter of todolist should be changed', () => {
   expect(endState[1].filter).toBe(newFilter);
 });
 test('todolists should be added', () => {
-  const action = setTodolists(startState);
+  const action: TestAction<typeof fetchTodoList.fulfilled> = {
+    type: fetchTodoList.fulfilled.type,
+    payload: startState,
+  };
 
   const endState = todoListSlice.reducer([], action);
 

@@ -4,7 +4,7 @@ import {
   addTodolistTC,
   changeTodolistFilter,
   changeTodolistTitleTC,
-  fetchTodolistsTC,
+  fetchTodoList,
   FilterValuesType,
   removeTodolistTC,
   selectTodoLists,
@@ -34,8 +34,8 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     if (demo || !isLoggedIn) {
       return;
     }
-    const thunk = fetchTodolistsTC();
-    dispatch(thunk);
+
+    dispatch(fetchTodoList());
   }, []);
 
   const removeTaskCallback = useCallback(function (

@@ -9,8 +9,8 @@ import {
 import { createSlice } from '@reduxjs/toolkit';
 import {
   addTodolist,
+  fetchTodoList,
   removeTodolist,
-  setTodolists,
 } from 'features/TodolistsList/todolists-reducer';
 import { setAppStatus } from 'app/app-reducer';
 
@@ -68,7 +68,8 @@ export const taskSlice = createSlice({
       .addCase(removeTodolist, (state, action) => {
         delete state[action.payload];
       })
-      .addCase(setTodolists, (state, action) => {
+
+      .addCase(fetchTodoList.fulfilled, (state, action) => {
         action.payload.forEach((tl) => {
           state[tl.id] = [];
         });
