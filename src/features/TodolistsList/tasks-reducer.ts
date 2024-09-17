@@ -65,7 +65,7 @@ export const taskSlice = createSlice({
       .addCase(addTodolist, (state, action) => {
         state[action.payload.id] = [];
       })
-      .addCase(removeTodolist, (state, action) => {
+      .addCase(removeTodolist.fulfilled, (state, action) => {
         delete state[action.payload];
       })
 

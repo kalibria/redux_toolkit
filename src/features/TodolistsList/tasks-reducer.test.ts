@@ -192,7 +192,10 @@ test('new array should be added when new todolist is added', () => {
 });
 
 test('propertry with todolistId should be deleted', () => {
-  const action = removeTodolist('todolistId2');
+  const action: TestAction<typeof removeTodolist.fulfilled> = {
+    type: removeTodolist.fulfilled.type,
+    payload: 'todolistId2',
+  };
 
   const endState = taskSlice.reducer(startState, action);
 

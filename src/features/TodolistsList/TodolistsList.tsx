@@ -6,7 +6,7 @@ import {
   changeTodolistTitleTC,
   fetchTodoList,
   FilterValuesType,
-  removeTodolistTC,
+  removeTodolist,
   selectTodoLists,
 } from './todolists-reducer';
 import { removeTask, selectTasks, updateTask } from './tasks-reducer';
@@ -76,9 +76,8 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     dispatch(action);
   }, []);
 
-  const removeTodolist = useCallback(function (id: string) {
-    const thunk = removeTodolistTC(id);
-    dispatch(thunk);
+  const removeTodolistCallback = useCallback(function (todolistId: string) {
+    dispatch(removeTodolist({ todolistId }));
   }, []);
 
   const changeTodolistTitle = useCallback(function (id: string, title: string) {
@@ -126,7 +125,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
                   changeFilter={changeFilter}
                   addTask={addTaskCallback}
                   changeTaskStatus={changeStatus}
-                  removeTodolist={removeTodolist}
+                  removeTodolist={removeTodolistCallback}
                   changeTaskTitle={changeTaskTitle}
                   changeTodolistTitle={changeTodolistTitle}
                   demo={demo}

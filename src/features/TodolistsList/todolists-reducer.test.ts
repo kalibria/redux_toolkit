@@ -44,10 +44,12 @@ beforeEach(() => {
 });
 
 test('correct todolist should be removed', () => {
-  const endState = todoListSlice.reducer(
-    startState,
-    removeTodolist(todolistId1)
-  );
+  const action: TestAction<typeof removeTodolist.fulfilled> = {
+    type: removeTodolist.fulfilled.type,
+    payload: 'todolistId2',
+  };
+
+  const endState = todoListSlice.reducer(startState, action);
 
   expect(endState.length).toBe(1);
   expect(endState[0].id).toBe(todolistId2);
