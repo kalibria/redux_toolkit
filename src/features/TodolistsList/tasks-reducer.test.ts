@@ -94,7 +94,10 @@ beforeEach(() => {
 });
 
 test('correct task should be deleted from correct array', () => {
-  const action = removeTask({ taskId: '2', todolistId: 'todolistId2' });
+  const action: TestAction<typeof removeTask.fulfilled> = {
+    type: removeTask.fulfilled.type,
+    payload: { taskId: '2', todolistId: 'todolistId2' },
+  };
 
   const endState = taskSlice.reducer(startState, action);
 

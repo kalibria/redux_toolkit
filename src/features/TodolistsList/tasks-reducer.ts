@@ -38,21 +38,7 @@ const initialState: TasksState = {};
 export const taskSlice = createSlice({
   name: 'tasks',
   initialState,
-  reducers: {
-    removeTask(
-      state,
-      action: PayloadAction<{
-        taskId: string;
-        todolistId: string;
-      }>
-    ) {
-      const tasks = state[action.payload.todolistId];
-      const index = tasks.findIndex(
-        (todo) => todo.id === action.payload.taskId
-      );
-      if (index !== -1) tasks.splice(index, 1);
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchTasks.fulfilled, (state, action) => {
@@ -68,6 +54,13 @@ export const taskSlice = createSlice({
         if (task) {
           Object.assign(task, action.payload.model);
         }
+      })
+      .addCase(removeTask.fulfilled, (state, action) => {
+        const tasks = state[action.payload.todolistId];
+        const index = tasks.findIndex(
+          (todo) => todo.id === action.payload.taskId
+        );
+        if (index !== -1) tasks.splice(index, 1);
       })
 
       .addCase(addTodolist, (state, action) => {
@@ -87,7 +80,6 @@ export const taskSlice = createSlice({
   },
 });
 
-export const { removeTask } = taskSlice.actions;
 export const { selectTasks } = taskSlice.selectors;
 
 // thunks
@@ -173,11 +165,16 @@ export const updateTask = createAppAsyncThunk<UpdateTypesArgs, UpdateTypesArgs>(
   }
 );
 
-export const removeTaskTC =
-  (taskId: string, todolistId: string): AppThunk =>
-  (dispatch) => {
-    todolistsAPI.deleteTask(todolistId, taskId).then((res) => {
-      const action = removeTask({ taskId: taskId, todolistId: todolistId });
-      dispatch(action);
-    });
-  };
+export const removeTask = createAppAsyncThunk<
+  { taskId: string; todolistId: string },
+  { taskId: string; todolistId: string }
+>(`${taskSlice.name}/removeTask`, async (arg, thunkAPI) => {
+  const { dispatch, rejectWithValue } = thunkAPI;
+  try {
+    const res = await todolistsAPI.deleteTask(arg.todolistId, arg.taskId);
+    return { taskId: arg.taskId, todolistId: arg.todolistId };
+  } catch (error: any) {
+    handleServerAppError(error, dispatch);
+    return rejectWithValue(null);
+  }
+});
