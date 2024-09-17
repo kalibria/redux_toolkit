@@ -19,10 +19,6 @@ export const todoListSlice = createSlice({
   name: 'todoList',
   initialState,
   reducers: {
-    addTodolist(state, action: PayloadAction<TodolistType>) {
-      state.unshift({ ...action.payload, filter: 'all', entityStatus: 'idle' });
-    },
-
     changeTodolistTitle(
       state,
       action: PayloadAction<{
@@ -60,6 +56,13 @@ export const todoListSlice = createSlice({
       .addCase(removeTodolist.fulfilled, (state, action) => {
         const index = state.findIndex((todo) => todo.id === action.payload);
         if (index !== -1) state.splice(index, 1);
+      })
+      .addCase(addTodolist.fulfilled, (state, action) => {
+        state.unshift({
+          ...action.payload,
+          filter: 'all',
+          entityStatus: 'idle',
+        });
       });
   },
   selectors: {
@@ -68,7 +71,6 @@ export const todoListSlice = createSlice({
 });
 
 export const {
-  addTodolist,
   changeTodolistFilter,
   changeTodolistEntityStatus,
   changeTodolistTitle,
@@ -112,15 +114,22 @@ export const removeTodolist = createAppAsyncThunk<
   }
 });
 
-export const addTodolistTC = (title: string): AppThunk => {
-  return (dispatch) => {
-    dispatch(setAppStatus('loading'));
-    todolistsAPI.createTodolist(title).then((res) => {
-      dispatch(addTodolist(res.data.data.item));
+export const addTodolist = createAppAsyncThunk<TodolistType, string>(
+  `${todoListSlice.name}/addTodolist`,
+  async (title, thunkAPI) => {
+    const { dispatch, rejectWithValue } = thunkAPI;
+    try {
+      dispatch(setAppStatus('loading'));
+      const res = await todolistsAPI.createTodolist(title);
       dispatch(setAppStatus('succeeded'));
-    });
-  };
-};
+      return res.data.data.item;
+    } catch (error: any) {
+      handleServerNetworkError(error, dispatch);
+      return rejectWithValue(null);
+    }
+  }
+);
+
 export const changeTodolistTitleTC = (id: string, title: string): AppThunk => {
   return (dispatch) => {
     todolistsAPI.updateTodolist(id, title).then((res) => {

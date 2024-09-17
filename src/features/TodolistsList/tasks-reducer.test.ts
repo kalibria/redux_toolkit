@@ -172,12 +172,15 @@ test('title of specified task should be changed', () => {
   expect(endState['todolistId2'][0].title).toBe('bread');
 });
 test('new array should be added when new todolist is added', () => {
-  const action = addTodolist({
-    id: 'blabla',
-    title: 'new todolist',
-    order: 0,
-    addedDate: '',
-  });
+  const action: TestAction<typeof addTodolist.fulfilled> = {
+    type: addTodolist.fulfilled.type,
+    payload: {
+      id: 'blabla',
+      title: 'new todolist',
+      order: 0,
+      addedDate: '',
+    },
+  };
 
   const endState = taskSlice.reducer(startState, action);
 

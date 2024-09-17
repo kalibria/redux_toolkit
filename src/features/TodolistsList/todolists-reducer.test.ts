@@ -63,7 +63,12 @@ test('correct todolist should be added', () => {
     order: 0,
   };
 
-  const endState = todoListSlice.reducer(startState, addTodolist(todolist));
+  const action: TestAction<typeof addTodolist.fulfilled> = {
+    type: addTodolist.fulfilled.type,
+    payload: todolist,
+  };
+
+  const endState = todoListSlice.reducer(startState, action);
 
   expect(endState.length).toBe(3);
   expect(endState[0].title).toBe(todolist.title);

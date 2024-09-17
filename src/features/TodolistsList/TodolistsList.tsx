@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
-  addTodolistTC,
+  addTodolist,
   changeTodolistFilter,
   changeTodolistTitleTC,
   fetchTodoList,
@@ -85,10 +85,9 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     dispatch(thunk);
   }, []);
 
-  const addTodolist = useCallback(
+  const addTodolistCallback = useCallback(
     (title: string) => {
-      const thunk = addTodolistTC(title);
-      dispatch(thunk);
+      dispatch(addTodolist(title));
     },
     [dispatch]
   );
@@ -103,7 +102,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
         container
         style={{ padding: '20px' }}
       >
-        <AddItemForm addItem={addTodolist} />
+        <AddItemForm addItem={addTodolistCallback} />
       </Grid>
       <Grid
         container
