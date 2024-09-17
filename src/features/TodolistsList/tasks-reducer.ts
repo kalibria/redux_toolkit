@@ -6,13 +6,12 @@ import {
   UpdateTaskModelType,
   UpdateTypesArgs,
 } from 'api/todolists-api';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import {
   addTodolist,
   removeTodolist,
   setTodolists,
 } from 'features/TodolistsList/todolists-reducer';
-import { AppDispatch, AppRootStateType, AppThunk } from 'app/store';
 import { setAppStatus } from 'app/app-reducer';
 
 import {
