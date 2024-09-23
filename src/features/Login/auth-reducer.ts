@@ -53,11 +53,11 @@ export const login = createAppAsyncThunk<
       return { isLoggedIn: true };
     } else {
       handleServerAppError(res.data, dispatch);
+      return rejectWithValue(res.data);
     }
-    return rejectWithValue(null);
   } catch (error: any) {
     handleServerNetworkError(error, dispatch);
-    return rejectWithValue(null);
+    return rejectWithValue(error);
   }
 });
 
