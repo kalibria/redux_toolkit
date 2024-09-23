@@ -5,7 +5,6 @@ import {
   handleServerAppError,
   handleServerNetworkError,
 } from 'utils/error-utils';
-import { AppThunk } from 'app/store';
 import { createAppAsyncThunk } from 'utils/createAppAsyncThunk';
 
 type InitialState = {
