@@ -1,14 +1,17 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  asyncThunkCreator,
+  buildCreateSlice,
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 import {
   todolistsAPI,
   TodolistType,
   UpdateTodoTypesArgs,
 } from 'api/todolists-api';
 import { RequestStatus, setAppStatus } from 'app/app-reducer';
-import { AppThunk } from 'app/store';
 import { handleServerNetworkError } from 'utils/error-utils';
 import { createAppAsyncThunk } from 'utils/createAppAsyncThunk';
-import { useDispatch } from 'react-redux';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
@@ -19,7 +22,11 @@ export type TodolistDomainType = TodolistType & {
 
 const initialState: Array<TodolistDomainType> = [];
 
-export const todoListSlice = createSlice({
+const createAppSlice = buildCreateSlice({
+  creators: { asyncThunk: asyncThunkCreator },
+});
+
+export const todoListSlice = createAppSlice({
   name: 'todoList',
   initialState,
   reducers: {
