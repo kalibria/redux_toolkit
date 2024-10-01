@@ -17,7 +17,6 @@ import { Todolist } from './Todolist/Todolist';
 import { Navigate } from 'react-router-dom';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { selectIsLoggedIn } from 'features/Login/auth-reducer';
-import { addTask } from './tasks-reducer';
 
 type PropsType = {
   demo?: boolean;
@@ -139,3 +138,6 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     </>
   );
 };
+function addTask(arg0: { todolistId: string; title: string }): any {
+  throw new Error('Function not implemented.');
+}

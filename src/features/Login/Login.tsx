@@ -1,9 +1,5 @@
 import React from 'react';
-import { useFormik } from 'formik';
-import { useSelector } from 'react-redux';
-import { login, selectIsLoggedIn } from './auth-reducer';
 import { Navigate } from 'react-router-dom';
-import { useAppDispatch } from 'hooks/useAppDispatch';
 import {
   Button,
   Checkbox,
@@ -14,42 +10,10 @@ import {
   Grid,
   TextField,
 } from '@mui/material';
-import { BaseResponseType } from 'api/todolists-api';
-import { setAppError } from 'app/app-reducer';
+import { useLogin } from 'features/Login/lib/useLogin';
 
 export const Login = () => {
-  const dispatch = useAppDispatch();
-
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-
-  const formik = useFormik({
-    validate: (values) => {
-      // if (!values.email) {
-      //   return {
-      //     email: 'Email is required',
-      //   };
-      // }
-      // if (!values.password) {
-      //   return {
-      //     password: 'Password is required',
-      //   };
-      // }
-    },
-    initialValues: {
-      email: '',
-      password: '',
-      rememberMe: false,
-    },
-    onSubmit: (values, formikHelpers) => {
-      dispatch(login(values))
-        .unwrap()
-        .catch((error: BaseResponseType) => {
-          error.fieldsErrors.forEach((el) => {
-            formikHelpers.setFieldError(el.field, el.error);
-          });
-        });
-    },
-  });
+  const { formik, isLoggedIn } = useLogin();
 
   if (isLoggedIn) {
     return <Navigate to={'/'} />;

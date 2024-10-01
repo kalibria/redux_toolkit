@@ -52,7 +52,7 @@ export const login = createAppAsyncThunk<
       dispatch(setAppStatus('succeeded'));
       return { isLoggedIn: true };
     } else {
-      handleServerAppError(res.data, dispatch);
+      handleServerAppError(res.data, dispatch, false);
       return rejectWithValue(res.data);
     }
   } catch (error: any) {
@@ -94,7 +94,7 @@ export const initializeApp = createAppAsyncThunk<
     if (res.data.resultCode === 0) {
       return { isLoggedIn: true };
     } else {
-      // handleServerAppError(res.data, dispatch);
+      handleServerAppError(res.data, dispatch, false);
       return rejectWithValue(null);
     }
   } catch (error: any) {

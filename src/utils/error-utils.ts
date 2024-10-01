@@ -4,14 +4,16 @@ import { Dispatch } from 'redux';
 
 export const handleServerAppError = <D>(
   data: BaseResponseType<D>,
-  dispatch: Dispatch
+  dispatch: Dispatch,
+  isShowGlobalError: boolean = true
 ) => {
-  if (data.messages.length) {
-    dispatch(setAppError(data.messages[0]));
-  } else {
-    dispatch(setAppError('Some error occurred'));
-  }
-  dispatch(setAppStatus('failed'));
+  if (isShowGlobalError) {
+    if (data.messages.length) {
+      dispatch(setAppError(data.messages[0]));
+    } else {
+      dispatch(setAppError('Some error occurred'));
+    }
+  } else dispatch(setAppStatus('failed'));
 };
 
 export const handleServerNetworkError = (
