@@ -1,5 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { Grid, Paper } from '@mui/material';
+import { AddItemForm } from 'components/AddItemForm/AddItemForm';
+import { Navigate } from 'react-router-dom';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { selectIsLoggedIn } from 'features/Login/auth-reducer';
 import {
   addTodolist,
   changeTodolistFilter,
@@ -8,15 +13,14 @@ import {
   FilterValuesType,
   removeTodolist,
   selectTodoLists,
-} from './todolists-reducer';
-import { removeTask, selectTasks, updateTask } from './tasks-reducer';
-import { TaskStatuses } from 'api/todolists-api';
-import { Grid, Paper } from '@mui/material';
-import { AddItemForm } from 'components/AddItemForm/AddItemForm';
-import { Todolist } from './Todolist/Todolist';
-import { Navigate } from 'react-router-dom';
-import { useAppDispatch } from 'hooks/useAppDispatch';
-import { selectIsLoggedIn } from 'features/Login/auth-reducer';
+} from 'features/TodolistsList/model/todolists-reducer';
+import {
+  removeTask,
+  selectTasks,
+  updateTask,
+} from 'features/Task/model/tasks-reducer';
+import { TaskStatuses } from 'features/Task/api/tasksApi.types';
+import { Todolist } from 'features/TodolistsList/ui/Todolist';
 
 type PropsType = {
   demo?: boolean;

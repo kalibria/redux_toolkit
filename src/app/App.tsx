@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
 import './App.css';
-import { TodolistsList } from 'features/TodolistsList/TodolistsList';
 import { ErrorSnackbar } from 'components/ErrorSnackbar/ErrorSnackbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAppInitialized, selectAppStatus } from './app-reducer';
@@ -22,6 +21,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Menu } from '@mui/icons-material';
+import { TodolistsList } from 'features/TodolistsList/ui/TodolistsList';
 
 type PropsType = {
   demo?: boolean;

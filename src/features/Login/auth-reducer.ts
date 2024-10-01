@@ -1,11 +1,14 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { authAPI, LoginParamsType } from 'api/todolists-api';
+import { createSlice } from '@reduxjs/toolkit';
 import { setAppInitialized, setAppStatus } from 'app/app-reducer';
 import {
   handleServerAppError,
   handleServerNetworkError,
 } from 'utils/error-utils';
 import { createAppAsyncThunk } from 'utils/createAppAsyncThunk';
+import {
+  authAPI,
+  LoginParamsType,
+} from 'features/TodolistsList/api/todolistsApi';
 
 type InitialState = {
   isLoggedIn: boolean;

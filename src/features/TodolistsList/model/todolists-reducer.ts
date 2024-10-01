@@ -1,17 +1,17 @@
 import {
   asyncThunkCreator,
   buildCreateSlice,
-  createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit';
-import {
-  todolistsAPI,
-  TodolistType,
-  UpdateTodoTypesArgs,
-} from 'api/todolists-api';
+
 import { RequestStatus, setAppStatus } from 'app/app-reducer';
 import { handleServerNetworkError } from 'utils/error-utils';
 import { createAppAsyncThunk } from 'utils/createAppAsyncThunk';
+import {
+  TodolistType,
+  UpdateTodoTypesArgs,
+} from 'features/TodolistsList/api/todoListApi.types';
+import { todolistsApi } from 'features/TodolistsList/api/todolistsApi';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
@@ -87,7 +87,7 @@ export const fetchTodoList = createAppAsyncThunk<TodolistType[]>(
     const { dispatch, rejectWithValue } = thunkAPI;
     try {
       dispatch(setAppStatus('loading'));
-      const res = await todolistsAPI.getTodolists();
+      const res = await todolistsApi.getTodolists();
       dispatch(setAppStatus('succeeded'));
       return res.data;
     } catch (error: any) {
@@ -107,7 +107,7 @@ export const removeTodolist = createAppAsyncThunk<
     dispatch(
       changeTodolistEntityStatus({ id: arg.todolistId, status: 'loading' })
     );
-    const res = await todolistsAPI.deleteTodolist(arg.todolistId);
+    const res = await todolistsApi.deleteTodolist(arg.todolistId);
     dispatch(setAppStatus('succeeded'));
     return arg.todolistId;
   } catch (error: any) {
@@ -122,7 +122,7 @@ export const addTodolist = createAppAsyncThunk<TodolistType, string>(
     const { dispatch, rejectWithValue } = thunkAPI;
     try {
       dispatch(setAppStatus('loading'));
-      const res = await todolistsAPI.createTodolist(title);
+      const res = await todolistsApi.createTodolist(title);
       dispatch(setAppStatus('succeeded'));
       return res.data.data.item;
     } catch (error: any) {
@@ -140,7 +140,7 @@ export const changeTodolistTitle = createAppAsyncThunk<
   async ({ id, title }, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI;
     try {
-      const res = await todolistsAPI.updateTodolist(id, title);
+      const res = await todolistsApi.updateTodolist(id, title);
       return { id: id, title: title };
     } catch (error: any) {
       handleServerNetworkError(error, dispatch);

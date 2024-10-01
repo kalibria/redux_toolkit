@@ -1,6 +1,6 @@
 import { setAppError, setAppStatus } from 'app/app-reducer';
-import { BaseResponseType } from 'api/todolists-api';
 import { Dispatch } from 'redux';
+import { BaseResponseType } from 'features/TodolistsList/api/todolistsApi';
 
 export const handleServerAppError = <D>(
   data: BaseResponseType<D>,

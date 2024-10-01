@@ -1,3 +1,4 @@
+import { TestAction } from 'common/types/types';
 import {
   addTask,
   fetchTasks,
@@ -5,15 +6,13 @@ import {
   taskSlice,
   TasksState,
   updateTask,
-} from './tasks-reducer';
-
+} from 'features/Task/model/tasks-reducer';
+import { TaskPriorities, TaskStatuses } from 'features/Task/api/tasksApi.types';
 import {
   addTodolist,
   fetchTodoList,
   removeTodolist,
-} from './todolists-reducer';
-import { TaskPriorities, TaskStatuses } from 'api/todolists-api';
-import { TestAction } from 'common/types/types';
+} from 'features/TodolistsList/model/todolists-reducer';
 
 let startState: TasksState = {};
 beforeEach(() => {

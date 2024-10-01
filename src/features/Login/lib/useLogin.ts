@@ -1,8 +1,9 @@
 import { useFormik } from 'formik';
 import { login, selectIsLoggedIn } from 'features/Login/auth-reducer';
-import { BaseResponseType } from 'api/todolists-api';
-import { useDispatch, useSelector } from 'react-redux';
+
+import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'hooks/useAppDispatch';
+import { BaseResponseType } from 'features/TodolistsList/api/todolistsApi';
 
 export const useLogin = () => {
   const dispatch = useAppDispatch();

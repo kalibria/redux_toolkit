@@ -1,3 +1,6 @@
+import { v1 } from 'uuid';
+import { RequestStatus } from 'app/app-reducer';
+import { TestAction } from 'common/types/types';
 import {
   addTodolist,
   changeTodolistEntityStatus,
@@ -6,15 +9,10 @@ import {
   fetchTodoList,
   FilterValuesType,
   removeTodolist,
-  // setTodolists,
   TodolistDomainType,
   todoListSlice,
-} from './todolists-reducer';
-import { v1 } from 'uuid';
-import { TodolistType } from 'api/todolists-api';
-import { RequestStatus } from 'app/app-reducer';
-import { fetchTasks } from 'features/TodolistsList/tasks-reducer';
-import { TestAction } from 'common/types/types';
+} from 'features/TodolistsList/model/todolists-reducer';
+import { TodolistType } from 'features/TodolistsList/api/todoListApi.types';
 
 let todolistId1: string;
 let todolistId2: string;
