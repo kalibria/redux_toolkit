@@ -13,12 +13,12 @@ type TaskPropsType = {
 export const Task = (props: TaskPropsType) => {
   const dispatch = useAppDispatch();
 
-  const onClickHandler = () =>
+  const removeTaskHandler = () =>
     dispatch(
       removeTask({ taskId: props.task.id, todolistId: props.todolistId })
     );
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const updateTaskHandler = (e: ChangeEvent<HTMLInputElement>) => {
     let newIsDoneValue = e.currentTarget.checked;
     dispatch(
       updateTask({
@@ -31,7 +31,7 @@ export const Task = (props: TaskPropsType) => {
     );
   };
 
-  const onTitleChangeHandler = (newValue: string) => {
+  const titleChangeHandler = (newValue: string) => {
     dispatch(
       updateTask({
         taskId: props.task.id,
@@ -48,14 +48,14 @@ export const Task = (props: TaskPropsType) => {
       <Checkbox
         checked={props.task.status === TaskStatuses.Completed}
         color="primary"
-        onChange={onChangeHandler}
+        onChange={updateTaskHandler}
       />
 
       <EditableSpan
         value={props.task.title}
-        onChange={onTitleChangeHandler}
+        onChange={titleChangeHandler}
       />
-      <IconButton onClick={onClickHandler}>
+      <IconButton onClick={removeTaskHandler}>
         <Delete />
       </IconButton>
     </div>
