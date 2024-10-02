@@ -14,33 +14,29 @@ type Props = {
 export const FilterTaskButtons = ({ todoId, filter }: Props) => {
   const dispatch = useAppDispatch();
 
-  const changeOnAllFilterCallback = () =>
-    dispatch(changeTodolistFilter({ id: todoId, filter: 'all' }));
+  const changeTaskFilter = (filter: FilterValuesType) => {
+    dispatch(changeTodolistFilter({ id: todoId, filter }));
+  };
 
-  const changeOnActiveFilterCallback = () =>
-    dispatch(changeTodolistFilter({ id: todoId, filter: 'active' }));
-
-  const changeOnCompletedFilterCallback = () =>
-    dispatch(changeTodolistFilter({ id: todoId, filter: 'completed' }));
   return (
     <>
       <Button
         variant={filter === 'all' ? 'outlined' : 'text'}
-        onClick={changeOnAllFilterCallback}
+        onClick={() => changeTaskFilter('all')}
         color={'inherit'}
       >
         All
       </Button>
       <Button
         variant={filter === 'active' ? 'outlined' : 'text'}
-        onClick={changeOnActiveFilterCallback}
+        onClick={() => changeTaskFilter('active')}
         color={'primary'}
       >
         Active
       </Button>
       <Button
         variant={filter === 'completed' ? 'outlined' : 'text'}
-        onClick={changeOnCompletedFilterCallback}
+        onClick={() => changeTaskFilter('completed')}
         color={'secondary'}
       >
         Completed
