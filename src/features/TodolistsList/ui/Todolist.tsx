@@ -1,19 +1,18 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { AddItemForm } from 'components/AddItemForm/AddItemForm';
 import { EditableSpan } from 'components/EditableSpan/EditableSpan';
 import { useAppDispatch } from 'hooks/useAppDispatch';
-import { Button, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import {
-  changeTodolistFilter,
   changeTodolistTitle,
-  FilterValuesType,
   removeTodolist,
   TodolistDomainType,
 } from 'features/TodolistsList/model/todolists-reducer';
 import { TaskStatuses, TaskType } from 'features/Task/api/tasksApi.types';
 import { addTask, fetchTasks } from 'features/Task/model/tasks-reducer';
 import { Task } from 'features/Task/ui/Task';
+import { FilterTaskButtons } from 'features/TodolistsList/filterTaskButtons/FilterTaskButtons';
 
 type Props = {
   todolist: TodolistDomainType;
@@ -40,17 +39,6 @@ export const Todolist = ({ demo = false, ...props }: Props) => {
 
   const changeTodolistTitleCallback = (title: string) =>
     dispatch(changeTodolistTitle({ id: props.todolist.id, title }));
-
-  const changeOnAllFilterCallback = () =>
-    dispatch(changeTodolistFilter({ id: props.todolist.id, filter: 'all' }));
-
-  const changeOnActiveFilterCallback = () =>
-    dispatch(changeTodolistFilter({ id: props.todolist.id, filter: 'active' }));
-
-  const changeOnCompletedFilterCallback = () =>
-    dispatch(
-      changeTodolistFilter({ id: props.todolist.id, filter: 'completed' })
-    );
 
   let tasksForTodolist = props.tasks;
 
@@ -91,27 +79,10 @@ export const Todolist = ({ demo = false, ...props }: Props) => {
         ))}
       </div>
       <div style={{ paddingTop: '10px' }}>
-        <Button
-          variant={props.todolist.filter === 'all' ? 'outlined' : 'text'}
-          onClick={changeOnAllFilterCallback}
-          color={'inherit'}
-        >
-          All
-        </Button>
-        <Button
-          variant={props.todolist.filter === 'active' ? 'outlined' : 'text'}
-          onClick={changeOnActiveFilterCallback}
-          color={'primary'}
-        >
-          Active
-        </Button>
-        <Button
-          variant={props.todolist.filter === 'completed' ? 'outlined' : 'text'}
-          onClick={changeOnCompletedFilterCallback}
-          color={'secondary'}
-        >
-          Completed
-        </Button>
+        <FilterTaskButtons
+          todoId={props.todolist.id}
+          filter={props.todolist.filter}
+        />
       </div>
     </div>
   );
