@@ -36,25 +36,6 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     dispatch(fetchTodoList());
   }, []);
 
-  const changeFilter = useCallback(function (
-    value: FilterValuesType,
-    todolistId: string
-  ) {
-    const action = changeTodolistFilter({ id: todolistId, filter: value });
-    dispatch(action);
-  }, []);
-
-  const removeTodolistCallback = useCallback(function (todolistId: string) {
-    dispatch(removeTodolist({ todolistId }));
-  }, []);
-
-  const changeTodolistTitleCallback = useCallback(function (
-    id: string,
-    title: string
-  ) {
-    dispatch(changeTodolistTitle({ id, title }));
-  }, []);
-
   const addTodolistCallback = useCallback(
     (title: string) => {
       dispatch(addTodolist(title));
@@ -90,9 +71,6 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
                 <Todolist
                   todolist={tl}
                   tasks={allTodolistTasks}
-                  changeFilter={changeFilter}
-                  removeTodolist={removeTodolistCallback}
-                  changeTodolistTitle={changeTodolistTitleCallback}
                   demo={demo}
                 />
               </Paper>
