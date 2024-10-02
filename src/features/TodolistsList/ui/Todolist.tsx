@@ -13,6 +13,7 @@ import { TaskStatuses, TaskType } from 'features/Task/api/tasksApi.types';
 import { addTask, fetchTasks } from 'features/Task/model/tasks-reducer';
 import { Task } from 'features/Task/ui/Task';
 import { FilterTaskButtons } from 'features/TodolistsList/filterTaskButtons/FilterTaskButtons';
+import { Tasks } from 'features/TodolistsList/tasks/Tasks';
 
 type Props = {
   todolist: TodolistDomainType;
@@ -42,15 +43,6 @@ export const Todolist = ({ demo = false, ...props }: Props) => {
 
   let tasksForTodolist = props.tasks;
 
-  if (props.todolist.filter === 'active') {
-    tasksForTodolist = props.tasks.filter((t) => t.status === TaskStatuses.New);
-  }
-  if (props.todolist.filter === 'completed') {
-    tasksForTodolist = props.tasks.filter(
-      (t) => t.status === TaskStatuses.Completed
-    );
-  }
-
   return (
     <div>
       <h3>
@@ -70,13 +62,11 @@ export const Todolist = ({ demo = false, ...props }: Props) => {
         disabled={props.todolist.entityStatus === 'loading'}
       />
       <div>
-        {tasksForTodolist.map((t) => (
-          <Task
-            key={t.id}
-            task={t}
-            todolistId={props.todolist.id}
-          />
-        ))}
+        <Tasks
+          tasks={tasksForTodolist}
+          todoId={props.todolist.id}
+          filter={props.todolist.filter}
+        />
       </div>
       <div style={{ paddingTop: '10px' }}>
         <FilterTaskButtons
