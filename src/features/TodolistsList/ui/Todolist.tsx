@@ -9,25 +9,13 @@ import {
   TodolistDomainType,
 } from 'features/TodolistsList/model/todolists-reducer';
 import { TaskStatuses, TaskType } from 'features/Task/api/tasksApi.types';
-import { fetchTasks } from 'features/Task/model/tasks-reducer';
+import { addTask, fetchTasks } from 'features/Task/model/tasks-reducer';
 import { Task } from 'features/Task/ui/Task';
 
 type PropsType = {
   todolist: TodolistDomainType;
   tasks: Array<TaskType>;
   changeFilter: (value: FilterValuesType, todolistId: string) => void;
-  addTask: (title: string, todolistId: string) => void;
-  changeTaskStatus: (
-    id: string,
-    status: TaskStatuses,
-    todolistId: string
-  ) => void;
-  changeTaskTitle: (
-    taskId: string,
-    newTitle: string,
-    todolistId: string
-  ) => void;
-  removeTask: (taskId: string, todolistId: string) => void;
   removeTodolist: (id: string) => void;
   changeTodolistTitle: (id: string, newTitle: string) => void;
   demo?: boolean;
@@ -46,12 +34,9 @@ export const Todolist = React.memo(function ({
     dispatch(fetchTasks(props.todolist.id));
   }, []);
 
-  const addTask = useCallback(
-    (title: string) => {
-      props.addTask(title, props.todolist.id);
-    },
-    [props.addTask, props.todolist.id]
-  );
+  const addTaskCallback = (title: string) => {
+    dispatch(addTask({ todolistId: props.todolist.id, title: title }));
+  };
 
   const removeTodolist = () => {
     props.removeTodolist(props.todolist.id);
@@ -102,7 +87,7 @@ export const Todolist = React.memo(function ({
         </IconButton>
       </h3>
       <AddItemForm
-        addItem={addTask}
+        addItem={addTaskCallback}
         disabled={props.todolist.entityStatus === 'loading'}
       />
       <div>
@@ -111,9 +96,6 @@ export const Todolist = React.memo(function ({
             key={t.id}
             task={t}
             todolistId={props.todolist.id}
-            removeTask={props.removeTask}
-            changeTaskTitle={props.changeTaskTitle}
-            changeTaskStatus={props.changeTaskStatus}
           />
         ))}
       </div>

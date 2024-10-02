@@ -3,47 +3,43 @@ import { Checkbox, IconButton } from '@mui/material';
 import { EditableSpan } from 'components/EditableSpan/EditableSpan';
 import { Delete } from '@mui/icons-material';
 import { TaskStatuses, TaskType } from 'features/Task/api/tasksApi.types';
+import { removeTask, updateTask } from 'features/Task/model/tasks-reducer';
+import { useAppDispatch } from 'hooks/useAppDispatch';
 
 type TaskPropsType = {
   task: TaskType;
   todolistId: string;
-  changeTaskStatus: (
-    id: string,
-    status: TaskStatuses,
-    todolistId: string
-  ) => void;
-  changeTaskTitle: (
-    taskId: string,
-    newTitle: string,
-    todolistId: string
-  ) => void;
-  removeTask: (taskId: string, todolistId: string) => void;
 };
-export const Task = React.memo((props: TaskPropsType) => {
-  const onClickHandler = useCallback(
-    () => props.removeTask(props.task.id, props.todolistId),
-    [props.task.id, props.todolistId]
-  );
+export const Task = (props: TaskPropsType) => {
+  const dispatch = useAppDispatch();
 
-  const onChangeHandler = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      let newIsDoneValue = e.currentTarget.checked;
-      props.changeTaskStatus(
-        props.task.id,
-        newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New,
-        props.todolistId
-      );
-    },
-    [props.task.id, props.todolistId]
-  );
+  const onClickHandler = () =>
+    dispatch(
+      removeTask({ taskId: props.task.id, todolistId: props.todolistId })
+    );
 
-  const onTitleChangeHandler = useCallback(
-    (newValue: string) => {
-      props.changeTaskTitle(props.task.id, newValue, props.todolistId);
-    },
-    [props.task.id, props.todolistId]
-  );
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    let newIsDoneValue = e.currentTarget.checked;
+    dispatch(
+      updateTask({
+        taskId: props.task.id,
+        model: {
+          status: newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New,
+        },
+        todolistId: props.todolistId,
+      })
+    );
+  };
 
+  const onTitleChangeHandler = (newValue: string) => {
+    dispatch(
+      updateTask({
+        taskId: props.task.id,
+        model: { title: newValue },
+        todolistId: props.todolistId,
+      })
+    );
+  };
   return (
     <div
       key={props.task.id}
@@ -64,4 +60,4 @@ export const Task = React.memo((props: TaskPropsType) => {
       </IconButton>
     </div>
   );
-});
+};

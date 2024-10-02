@@ -14,12 +14,7 @@ import {
   removeTodolist,
   selectTodoLists,
 } from 'features/TodolistsList/model/todolists-reducer';
-import {
-  removeTask,
-  selectTasks,
-  updateTask,
-} from 'features/Task/model/tasks-reducer';
-import { TaskStatuses } from 'features/Task/api/tasksApi.types';
+import { removeTask, selectTasks } from 'features/Task/model/tasks-reducer';
 import { Todolist } from 'features/TodolistsList/ui/Todolist';
 
 type PropsType = {
@@ -39,36 +34,6 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     }
 
     dispatch(fetchTodoList());
-  }, []);
-
-  const removeTaskCallback = useCallback(function (
-    taskId: string,
-    todolistId: string
-  ) {
-    dispatch(removeTask({ taskId, todolistId }));
-  }, []);
-
-  const addTaskCallback = useCallback(function (
-    title: string,
-    todolistId: string
-  ) {
-    dispatch(addTask({ todolistId, title }));
-  }, []);
-
-  const changeStatus = useCallback(function (
-    taskId: string,
-    status: TaskStatuses,
-    todolistId: string
-  ) {
-    dispatch(updateTask({ taskId, model: { status }, todolistId }));
-  }, []);
-
-  const changeTaskTitle = useCallback(function (
-    taskId: string,
-    title: string,
-    todolistId: string
-  ) {
-    dispatch(updateTask({ taskId, model: { title }, todolistId }));
   }, []);
 
   const changeFilter = useCallback(function (
@@ -125,12 +90,8 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
                 <Todolist
                   todolist={tl}
                   tasks={allTodolistTasks}
-                  removeTask={removeTaskCallback}
                   changeFilter={changeFilter}
-                  addTask={addTaskCallback}
-                  changeTaskStatus={changeStatus}
                   removeTodolist={removeTodolistCallback}
-                  changeTaskTitle={changeTaskTitle}
                   changeTodolistTitle={changeTodolistTitleCallback}
                   demo={demo}
                 />
